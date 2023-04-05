@@ -1,0 +1,27 @@
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: validating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-secrets-k8s-k-io-v1-generatedsecret
+  failurePolicy: Fail
+  name: vgeneratedsecret.kb.io
+  rules:
+  - apiGroups:
+    - secrets.k8s.k.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - generatedsecrets
+  sideEffects: None
