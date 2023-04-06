@@ -34,7 +34,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          make save-manifests docker-build docker-push IMG=ghcr.io/krystal/generated-secrets:${{ github.ref_name }}
+          make save-manifests docker-build docker-push IMG=ghcr.io/krystal/generated-secrets:${{ needs.release-please.outputs.version }}
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
