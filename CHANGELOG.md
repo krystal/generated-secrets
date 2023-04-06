@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.6](https://github.com/krystal/generated-secrets/compare/v0.0.5...v0.0.6) (2023-04-06)
+
+
+### Features
+
+* release please ([1c151e0](https://github.com/krystal/generated-secrets/commit/1c151e0dde4c10347ab05ace6da59433d0761f5d))
+
 ## [0.0.5](https://github.com/krystal/generated-secrets/compare/v0.0.4...v0.0.5) (2023-04-06)
 
 
