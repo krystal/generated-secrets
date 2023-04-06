@@ -4,7 +4,7 @@ A Kubernetes operator that can generate secrets containing randomly generated va
 
 ## Getting started
 
-1. Apply to your cluster
+1. Apply to your cluster (`kubectl apply -f https://github.com/krystal/generated-secrets/releases/latest/download/manifest.yaml`)
 2. Create a `GeneratedSecret` resource
 3. The operator will create a `Secret` resource with the generated values
 
