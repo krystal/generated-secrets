@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.6](https://github.com/krystal/generated-secrets/compare/v0.0.5...v0.0.6) (2023-04-07)
+
+
+### Features
+
+* release please ([1c151e0](https://github.com/krystal/generated-secrets/commit/1c151e0dde4c10347ab05ace6da59433d0761f5d))
+
+
+### Bug Fixes
+
+* allow webhooks to be disabled ([9bd5766](https://github.com/krystal/generated-secrets/commit/9bd576666a94aa617bd803366cb87edcd047cf62))
+* only save secrets once rather than after every key ([9cb3983](https://github.com/krystal/generated-secrets/commit/9cb3983ea8c864a3d795d7398e0f5175fa684bed))
+* remove finalizer when secret has already been deleted ([f1fcd1a](https://github.com/krystal/generated-secrets/commit/f1fcd1a5b94680d41e1b0a0d48fac66329e70d36))
+
 ## [0.0.5](https://github.com/krystal/generated-secrets/compare/v0.0.4...v0.0.5) (2023-04-06)
 
 
