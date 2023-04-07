@@ -85,11 +85,15 @@ func (r *GeneratedSecretReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 		// if desired and remove the finalizer.
 		if !generatedSecret.ObjectMeta.DeletionTimestamp.IsZero() {
 			if generatedSecret.Spec.DeleteSecretOnDelete {
-				if err := r.Delete(ctx, &secret); err != nil {
+				err = r.Delete(ctx, &secret)
+				if errors.IsNotFound(err) {
+					log.Info("secret is aleady deleted")
+				} else if err != nil {
 					log.Error(err, "unable to delete Secret")
 					return ctrl.Result{}, err
+				} else {
+					log.Info("deleted secret")
 				}
-				log.Info("deleted secret")
 			}
 
 			log.Info("removing finalizer")
