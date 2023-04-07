@@ -125,20 +125,20 @@ func (r *GeneratedSecretReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 		// Store that in the secret
 		secret.Data[keySpec.Name] = []byte(newValue)
 		log.Info("setting value for key", "key", keySpec.Name)
+	}
 
-		// Save or create the secret as appropriate
-		if newSecret {
-			log.Info("Creating secret")
-			if err := r.Create(ctx, &secret); err != nil {
-				log.Error(err, "unable to create Secret")
-				return ctrl.Result{}, err
-			}
-		} else {
-			log.Info("Updating secret")
-			if err := r.Update(ctx, &secret); err != nil {
-				log.Error(err, "unable to update Secret")
-				return ctrl.Result{}, err
-			}
+	// Save or create the secret as appropriate
+	if newSecret {
+		log.Info("creating secret")
+		if err := r.Create(ctx, &secret); err != nil {
+			log.Error(err, "unable to create Secret")
+			return ctrl.Result{}, err
+		}
+	} else {
+		log.Info("updating secret")
+		if err := r.Update(ctx, &secret); err != nil {
+			log.Error(err, "unable to update Secret")
+			return ctrl.Result{}, err
 		}
 	}
 
