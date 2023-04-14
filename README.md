@@ -11,7 +11,7 @@ A Kubernetes operator that can generate secrets containing randomly generated va
 ## Example
 
 ```yaml
-apiVersion: secrets.k8s.io/v1
+apiVersion: secrets.k8s.k.io/v1
 kind: GeneratedSecret
 metadata:
   name: my-secret
