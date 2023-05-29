@@ -44,6 +44,7 @@ Keys can use any of the following types. With the exception of UUID, they all re
 - UUID
 - DNSLabel
 - String
+- ECDSAKey
 
 ## Developing
 
