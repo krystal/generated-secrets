@@ -57,17 +57,18 @@ func validateGeneratedSecret(secret *GeneratedSecret) error {
 			allErrs = append(allErrs, field.Invalid(field.NewPath("spec").Child("keys").Index(i).Child("type"), key.Type, "must be one of the supported types"))
 		}
 
-		if key.Type == UUIDType && key.Length != 0 {
-			allErrs = append(allErrs, field.Invalid(field.NewPath("spec").Child("keys").Index(i).Child("length"), key.Length, "must not be set for UUID type"))
+		if typeNeedsLength(key.Type) == false && key.Length != 0 {
+			allErrs = append(allErrs, field.Invalid(field.NewPath("spec").Child("keys").Index(i).Child("length"), key.Length, "must not be set for type"))
 		}
 
-		if key.Type != UUIDType && key.Length == 0 {
+		if typeNeedsLength(key.Type) && key.Length == 0 {
 			allErrs = append(allErrs, field.Required(field.NewPath("spec").Child("keys").Index(i).Child("length"), "must be set"))
 		}
 
 		if key.Type == StringType && (key.String == nil || key.String.Charset == "") {
 			allErrs = append(allErrs, field.Required(field.NewPath("spec").Child("keys").Index(i).Child("string").Child("charset"), "must be set for string type"))
 		}
+
 	}
 
 	if len(allErrs) == 0 {
@@ -79,11 +80,20 @@ func validateGeneratedSecret(secret *GeneratedSecret) error {
 		secret.Name, allErrs)
 }
 
+func typeNeedsLength(t GeneratedSecretType) bool {
+	switch t {
+	case UUIDType, ECDSAKeyType:
+		return false
+	default:
+		return true
+	}
+}
+
 func validateTypeIsSupported(t GeneratedSecretType) bool {
 	switch t {
 	case Base64Type, Base64URLType, HexType, AlphanumericType, AlphabeticType, UpperType,
 		UpperNumericType, LowerType, LowerNumericType, NumericType, UUIDType, DNSLabelType,
-		StringType:
+		StringType, ECDSAKeyType:
 		return true
 	default:
 		return false
