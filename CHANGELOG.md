@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/krystal/generated-secrets/compare/v0.0.7...v1.0.0) (2023-05-29)
+
+
+### Features
+
+* support for generating EC256 private keys ([ab23f0d](https://github.com/krystal/generated-secrets/commit/ab23f0d795eafb58340e8f6f3d334a1164fc5ddb))
+
 ## [0.0.7](https://github.com/krystal/generated-secrets/compare/v0.0.6...v0.0.7) (2023-04-07)
 
 
