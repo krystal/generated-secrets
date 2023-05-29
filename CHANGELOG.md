@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/krystal/generated-secrets/compare/v1.0.0...v1.0.1) (2023-05-29)
+
+
+### Bug Fixes
+
+* fixes webhook for ECDSA types ([567c5a9](https://github.com/krystal/generated-secrets/commit/567c5a99ad0f5922dc4967f8439faeb13ca4e267))
+
 ## [1.0.0](https://github.com/krystal/generated-secrets/compare/v0.0.7...v1.0.0) (2023-05-29)
 
 
