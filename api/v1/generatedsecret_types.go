@@ -21,6 +21,7 @@ const (
 	UUIDType         GeneratedSecretType = "UUID"
 	DNSLabelType     GeneratedSecretType = "DNSLabel"
 	StringType       GeneratedSecretType = "String"
+	ECDSAKeyType     GeneratedSecretType = "ECDSAKey"
 )
 
 // GeneratedSecretSpec defines the desired state of GeneratedSecret

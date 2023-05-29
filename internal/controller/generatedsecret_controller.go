@@ -2,7 +2,13 @@ package controller
 
 import (
 	"context"
+	"encoding/pem"
 	"fmt"
+
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/x509"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -180,6 +186,25 @@ func generateRandomValue(spec secretsv1.GeneratedSecretKeySpec) (string, error) 
 		return rands.DNSLabel(spec.Length)
 	case secretsv1.StringType:
 		return rands.String(spec.Length, spec.String.Charset)
+	case secretsv1.ECDSAKeyType:
+		privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		if err != nil {
+			return "", err
+		}
+
+		derFormat, err := x509.MarshalECPrivateKey(privateKey)
+		if err != nil {
+			fmt.Println("Failed to marshal private key:", err)
+			return "", err
+		}
+
+		block := &pem.Block{
+			Type:  "EC PRIVATE KEY",
+			Bytes: derFormat,
+		}
+
+		privateBytes := pem.EncodeToMemory(block)
+		return string(privateBytes), nil
 	default:
 		return "", fmt.Errorf("invalid key type: %s", spec.Type)
 	}
