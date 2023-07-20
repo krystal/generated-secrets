@@ -39,3 +39,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload ${{ needs.release-please.outputs.tag_name }} manifest.yaml
+  publish-chart:
+    name: Publish Helm Chart
+    runs-on: [self-hosted, cluster]
+    needs: [build]
+    steps:
+      - uses: azure/setup-helm@v3
+        with:
+          version: "latest"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          helm registry login '${{ vars.KRYSTAL_REGISTRY_HOST }}' \
+            --username '${{ vars.KRYSTAL_REGISTRY_USERNAME }}' \
+            --password '${{ secrets.KRYSTAL_REGISTRY_PASSWORD }}'
+      - uses: actions/checkout@v3
+      - run: |
+          helm package ./chart/
+          helm push genered-secrets-*.tgz \
+            'oci://${{ vars.KRYSTAL_REGISTRY_HOST }}/kubernetes/charts'  

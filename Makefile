@@ -124,6 +124,18 @@ save-manifests: manifests kustomize ## Deploy controller to the K8s cluster spec
 	cd config/manager && $(KUSTOMIZE) edit set image controller=${IMG}
 	$(KUSTOMIZE) build config/default > manifest.yaml
 
+
+HELMIFY ?= $(LOCALBIN)/helmify
+
+.PHONY: helmify
+helmify: $(HELMIFY) ## Download helmify locally if necessary.
+$(HELMIFY): $(LOCALBIN)
+	test -s $(LOCALBIN)/helmify || GOBIN=$(LOCALBIN) go install github.com/arttor/helmify/cmd/helmify@latest
+    
+helm: manifests kustomize helmify
+	$(KUSTOMIZE) build config/default | $(HELMIFY)
+
+
 ##@ Build Dependencies
 
 ## Location to install dependencies to
