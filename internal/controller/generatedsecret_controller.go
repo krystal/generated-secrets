@@ -2,13 +2,12 @@ package controller
 
 import (
 	"context"
-	"encoding/pem"
-	"fmt"
-
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/x509"
+	"encoding/pem"
+	"fmt"
 
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -51,7 +50,7 @@ func (r *GeneratedSecretReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 	// Next, let's add a finalizer to our object if we don't have one because
 	// we don't want this to be deleted until we've also tidied up the secret
 	// if that was desirable.
-	if !controllerutil.ContainsFinalizer(&generatedSecret, finalizerName) {
+	if !controllerutil.ContainsFinalizer(&generatedSecret, finalizerName) && generatedSecret.ObjectMeta.DeletionTimestamp.IsZero() {
 		log.Info("adding finalizer to GeneratedSecret")
 		controllerutil.AddFinalizer(&generatedSecret, finalizerName)
 		if err := r.Update(ctx, &generatedSecret); err != nil {
@@ -96,7 +95,9 @@ func (r *GeneratedSecretReconciler) Reconcile(ctx context.Context, req ctrl.Requ
 					log.Info("secret is aleady deleted")
 				} else if err != nil {
 					log.Error(err, "unable to delete Secret")
-					return ctrl.Result{}, err
+					return ctrl.Result{
+						Requeue: true,
+					}, err
 				} else {
 					log.Info("deleted secret")
 				}
