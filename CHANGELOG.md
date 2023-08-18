@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/krystal/generated-secrets/compare/v1.0.1...v1.0.2) (2023-08-18)
+
+
+### Bug Fixes
+
+* requeue reconcile event when secret deletion fails ([#10](https://github.com/krystal/generated-secrets/issues/10)) ([4cba4a3](https://github.com/krystal/generated-secrets/commit/4cba4a332484cb0c565613fe931ab1a93a7fa3b2))
+
 ## [1.0.1](https://github.com/krystal/generated-secrets/compare/v1.0.0...v1.0.1) (2023-05-29)
 
 
